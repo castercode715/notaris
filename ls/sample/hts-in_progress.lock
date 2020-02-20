@@ -1,0 +1,7 @@
+Mirror in progress since Fri, 31 Jan 2020 10:35:45 .. please wait!
+winhttrack sample.com -O "ls/sample" -Y -%v 
+To pause the engine: create an empty file named 'hts-stop.lock'
+PID=8648
+UID=501
+GID=501
+START=1580441745

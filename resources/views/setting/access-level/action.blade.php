@@ -1,0 +1,1 @@
+<a href="{{ $url_show }}" class="btn btn-xs btn-primary" title="Detail {{ $model->role }}"><i class="fa fa-search"></i></a>

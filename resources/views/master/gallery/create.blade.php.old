@@ -1,0 +1,262 @@
+@extends('base.main')
+@section('title') Gallery @endsection
+@section('page_icon') <i class="fa fa-picture-o"></i> @endsection
+@section('page_title') Create Gallery @endsection
+@section('page_subtitle') list @endsection
+@section('menu')
+    <div class="box box-solid" style="text-align:right;">
+        <div class="box-body">
+            <a href="{{ route('gallery.index') }}" class="btn btn-success" title="Manage Asset">
+                <i class="fa fa-list"></i> Manage
+            </a>
+        </div>
+    </div>
+@endsection
+
+@section('content')
+<div class="box box-solid">
+    {!! Form::model($model, [
+        'route' => 'gallery.store',
+        'method'=> 'post',
+        'enctype'   => 'multipart/form-data'
+    ]) !!}
+    <div class="box-body">
+        <div class="box-body">
+            @if(count($errors) > 0)
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach($errors->all() as $error)
+                        <li>{{  $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <div class="row">
+            	<div class="col-md-12">
+                    <div class="form-group">
+                        <label for="owner_name" class="control-label">Title*</label>
+                        {!! Form::text('title', null, ['class'=>'form-control', 'id'=>'title']) !!}
+
+                        @if($errors->has('title'))
+                            <span class="invalid-feedback" role="alert">
+                                {{ $errors->first('title') }}
+                            </span>
+                        @endif
+                    </div>
+            	</div>
+            	<div class="col-md-12">
+                    <div class="form-group">
+                        <label for="owner_name" class="control-label">Desc Short*</label>
+                        {!! Form::text('desc_short', null, ['class'=>'form-control', 'id'=>'desc_short']) !!}
+
+                        @if($errors->has('desc_short'))
+                            <span class="invalid-feedback" role="alert">
+                                {{ $errors->first('desc_short') }}
+                            </span>
+                        @endif
+                    </div>
+            	</div>
+            	<div class="col-md-12">
+            		<div class="form-group">
+                        <label for="desc" class="control-label">Description Long*</label>
+                        {!! Form::textarea('desc_long', null, ['class'=>'form-control', 'id'=>'editor1', 'rows'=>6]) !!}
+
+                        @if($errors->has('desc_long'))
+                            <span class="invalid-feedback" role="alert">
+                                {{ $errors->first('desc_long') }}
+                            </span>
+                        @endif
+                    </div>
+            	</div>
+            </div>
+            
+            
+            
+            <div class="row">
+            	<div class="col-md-6" style="border-right: 1px solid #ccc;">
+    		        <label for="images" class="control-label">Photo</label>
+
+    		        <div class="field_wrapper">
+    			        <div class="form-group img-form-group row">
+                            <div class="col-md-7">
+                                <input type="file" name="images[]" class="form-control" accept="image/x-png, image/jpeg">
+                            </div>
+                            <div class="col-md-3">
+                                <label><input type="radio" name="featured[]" value="0" checked>&nbsp;Featured</label>
+                            </div>
+                            <div class="col-md-2">
+                                <a href="javascript:void(0);" class="add_button btn btn-sm btn-success" title="Add Field"><i class="fa fa-plus"></i></a>
+                            </div>
+    			        </div>
+    		        </div>
+                    <span class="invalid-feedback" style='margin-top: -10px;' role="alert">
+                            <i>File type: jpg, jpeg, png</i>
+                    </span>
+    		        @if($errors->has('images'))
+                        <span class="invalid-feedback" role="alert">
+                            {{ $errors->first('images') }}
+                        </span>
+                    @endif
+            	</div>
+                <div class="col-md-6">
+                    <label for="attr_name" class="control-label">Iframe</label>
+
+                    <div class="attributes_wrapper">
+                        <div class="form-group attr-form-group row">
+                            <div class="col-md-7">
+                                {!! Form::textarea('iframe[]', null, ['class'=>'form-control', 'id'=>'iframe', 'rows'=>2]) !!}
+                            </div>
+                            <div class="col-md-3">
+                                <label><input type="radio" name="featured_2[]" value="0" checked>&nbsp;Featured</label>
+                            </div>
+                            <div class="col-md-2">
+                                <a href="javascript:void(0);" class="add_attr_button btn btn-sm btn-success" title="Add Field" style=""><i class="fa fa-plus"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if($errors->has('iframe.*'))
+                        <span class="invalid-feedback" role="alert">
+                            {{ $errors->first('iframe.*') }}
+                        </span>
+                    @endif
+                    @if($errors->has('featured.*'))
+                        <span class="invalid-feedback" role="alert">
+                            {{ $errors->first('featured.*') }}
+                        </span>
+                    @endif
+                </div>
+
+
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="owner_npwp_number" class="control-label">Sort*</label>
+                        {!! Form::number('sort', null, ['class'=>'form-control', 'id'=>'sort']) !!}
+
+                        @if($errors->has('sort'))
+                            <span class="invalid-feedback" role="alert">
+                                {{ $errors->first('sort') }}
+                            </span>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+
+            
+        </div>
+
+    </div>
+    <div class="box-footer">
+        {!! Form::submit('Create', ['class'=>'btn btn-primary pull-right']) !!}
+    </div>
+    {!! Form::close() !!}
+</div>
+@endsection
+
+@push('scripts')
+<script>
+    $('.dynamic2').change(function(){
+        if($(this).val() != ''){
+            var value = $(this).val(),
+                token = $('input[name="_token"]').val();
+
+            $.ajax({
+                url : "{{ route('asset.fetch-attributes') }}",
+                method : 'post',
+                data : {
+                    value : value,
+                    _token : token
+                },
+                success : function(result){
+                    $('.attr_name').html(result);
+                }
+            });
+        }
+    });
+
+    // <div class="iradio_flat-green" aria-checked="false" aria-disabled="false" style="position: relative;"><input type="radio" name="r3" class="flat-red" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+
+	var maxField = 10,
+        addButton = $('.add_button'),
+		addAttrButton = $('.add_attr_button'),
+        wrapper = $('.field_wrapper'),
+		attr_wrapper = $('.attributes_wrapper'),
+        x = 0,
+        y = 1;
+
+	$(addButton).click(function(){
+		if(x < maxField){
+			x++;
+			$(wrapper).append('<div class="form-group img-form-group row"><div class="col-md-7"><input type="file" name="images[]" class="form-control" accept="image/x-png, image/jpeg"></div><div class="col-md-3"><label><input type="radio" name="featured[]" value="'+x+'" >&nbsp;Featured</label></div><div class="col-md-2"><a href="javascript:void(0);" class="remove_button btn btn-sm btn-danger" title="Remove"><i class="fa fa-close"></i></a></div></div>');
+		}
+	});
+
+	$(wrapper).on('click', '.remove_button', function(e){
+        e.preventDefault();
+        $(this).closest('.img-form-group').remove();
+        // $(this).parent('div').remove(); //Remove field html
+        // document.getElementsByClassName("form-group").remove();
+        x--; //Decrement field counter
+    });
+
+    $(addAttrButton).click(function(){
+        if(y < maxField){
+            y++;
+            $(attr_wrapper).append('<div class="form-group attr-form-group row"><div class="col-md-5"><textarea name="iframe[]" class="form-control attr_name attr_'+y+'" id="attr_name"></textarea></div><div class="col-md-5"><input type="radio" name="featured_2[]" value="'+x+'" >&nbsp;Featured</label></div><div class="col-md-2"><a href="javascript:void(0);" class="remove_attr_button btn btn-sm btn-danger" title="Remove"><i class="fa fa-close"></i></a></div></div>');
+
+            var value = $('#category_asset_id').val();
+            var token = $('input[name="_token"]').val();
+
+            $.ajax({
+                url : "{{ route('asset.fetch-attributes') }}",
+                method : 'post',
+                data : {
+                    value : value,
+                    _token : token
+                },
+                success : function(result){
+                    $('.attr_'+y).html(result);
+                }
+            });
+        }
+    });
+
+    $(attr_wrapper).on('click', '.remove_attr_button', function(e){
+        e.preventDefault();
+        $(this).closest('.attr-form-group').remove();
+        // $(this).parent('div').remove(); //Remove field html
+        // document.getElementsByClassName("form-group").remove();
+        x--; //Decrement field counter
+    });
+
+    $('.dynamic').change(function(){
+        if($(this).val() != ''){
+            var id = $(this).attr('id'),
+                value = $(this).val(),
+                table = $(this).data('table'),
+                key = $(this).data('key'),
+                token = $('input[name="_token"]').val();
+
+            $.ajax({
+                url : "{{ route('employee.fetch') }}",
+                method : 'post',
+                data : {
+                    id : id,
+                    value : value,
+                    _token : token,
+                    table : table,
+                    key : key
+                },
+                success : function(result){
+                    $('#'+table).html(result);
+                }
+            });
+        }
+    });
+
+</script>
+@endpush

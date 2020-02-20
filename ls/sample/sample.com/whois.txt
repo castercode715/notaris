@@ -1,0 +1,67 @@
+Domain Name: sample.com
+Registry Domain ID: 5066842_DOMAIN_COM-VRSN
+Registrar WHOIS Server: whois.moniker.com
+Registrar URL: http://www.moniker.com
+Updated Date: 2018-07-15T19:54:43Z
+Creation Date: 1997-06-18T04:00:00Z
+Registrar Registration Expiration Date: 2023-06-17T04:00:00Z
+Registrar: Moniker Online Services LLC
+Registrar IANA ID: 228
+Registrar Abuse Contact Email: abuse@moniker.com
+Registrar Abuse Contact Phone: +1.9546071294
+Domain Status: clientTransferProhibited https://icann.org/epp#clientTransferProhibited
+Registry Registrant ID: REDACTED FOR PRIVACY
+Registrant Name: Michael Castello 
+Registrant Organization: Castello Brothers, LLC
+Registrant Street: PO BOX 5537
+Registrant City: Playa del Rey
+Registrant State/Province: CA
+Registrant Postal Code: 90296
+Registrant Country: US
+Registrant Phone: +1.8887694764
+Registrant Phone Ext: 
+Registrant Fax: REDACTED FOR PRIVACY
+Registrant Fax Ext: REDACTED FOR PRIVACY
+Registrant Email: michael@ccin.com
+Registry Admin ID: REDACTED FOR PRIVACY
+Admin Name: Michael Castello 
+Admin Organization: Castello Brothers, LLC
+Admin Street: PO BOX 5537
+Admin City: Playa del Rey
+Admin State/Province: CA
+Admin Postal Code: 90296
+Admin Country: US
+Admin Phone: +1.8887694764
+Admin Phone Ext: 
+Admin Fax: REDACTED FOR PRIVACY
+Admin Fax Ext: REDACTED FOR PRIVACY
+Admin Email: michael@ccin.com
+Registry Tech ID: REDACTED FOR PRIVACY
+Tech Name: Michael Castello 
+Tech Organization: Castello Brothers, LLC
+Tech Street: PO BOX 5537
+Tech City: Playa del Rey
+Tech State/Province: CA
+Tech Postal Code: 90296
+Tech Country: US
+Tech Phone: +1.8887694764
+Tech Phone Ext: 
+Tech Fax: REDACTED FOR PRIVACY
+Tech Fax Ext: REDACTED FOR PRIVACY
+Tech Email: michael@ccin.com
+Registry Billing ID: REDACTED FOR PRIVACY
+Billing Name: Michael Castello 
+Billing Organization: Castello Brothers, LLC
+Billing Street: PO BOX 5537
+Billing City: Playa del Rey
+Billing State/Province: CA
+Billing Postal Code: 90296
+Billing Country: US
+Billing Phone: +1.8887694764
+Billing Phone Ext: 
+Billing Fax: REDACTED FOR PRIVACY
+Billing Fax Ext: REDACTED FOR PRIVACY
+Billing Email: michael@ccin.com
+Name Server: ns.rackspace.com 
+Name Server: ns2.rackspace.com 
+DNSSEC: unsigned

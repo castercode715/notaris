@@ -1,0 +1,2 @@
+<a href="{{ $url_show }}" class="btn btn-xs btn-primary" title="Detail {{ $model->title }}"><i class="fa fa-search"></i></a>
+<a href="{{ $url_edit }}" class="btn btn-xs btn-primary" title="Edit {{ $model->title }}"><i class="fa fa-edit"></i></a>

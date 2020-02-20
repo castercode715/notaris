@@ -1,0 +1,1 @@
+<a href="{{ $url_show }}" class="btn btn-xs btn-primary" title="Reply"><i class="fa fa-reply"></i></a>

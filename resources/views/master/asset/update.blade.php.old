@@ -1,0 +1,832 @@
+@extends('base.main')
+@section('title') Asset @endsection
+@section('page_icon') <i class="fa fa-cube"></i> @endsection
+@section('page_title') Edit Asset @endsection
+@section('page_subtitle') edit @endsection
+@section('menu')
+    <div class="box box-solid" style="text-align:right;">
+        <div class="box-body">
+            <a href="{{ route('asset.show', $model->id) }}" class="btn btn-success" title="Detail Asset">
+                <i class="fa fa-search"></i> Detail
+            </a>
+             {{-- onclick="return confirm('Anda yakin?')" --}}
+            <a href="{{ route('asset.delete', $model->id) }}" class="btn btn-danger btn-delete2" title="Delete">
+                <i class="fa fa-trash"></i> Delete
+            </a>
+        	<a href="{{ route('asset.create') }}" class="btn btn-success" title="Create Asset">
+                <i class="fa fa-plus"></i> Create
+            </a>
+            <a href="{{ route('asset.index') }}" class="btn btn-success" title="Manage Asset">
+                <i class="fa fa-list"></i> Manage
+            </a>
+        </div>
+    </div>
+@endsection
+
+@section('content')
+<div class="box box-solid">
+    {!! Form::model($model, [
+        'route' => ['asset.update', $model->id],
+        'method'=> 'put',
+        'enctype'   => 'multipart/form-data'
+    ]) !!}
+    <div class="box-body">
+        <div class="box-body">
+            @if(count($errors) > 0)
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach($errors->all() as $error)
+                        <li>{{  $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <h4>Asset</h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="asset_name" class="control-label">Name*</label>
+                        {!! Form::text('asset_name', null, ['class'=>'form-control', 'id'=>'asset_name']) !!}
+
+                        @if($errors->has('asset_name'))
+                            <span class="invalid-feedback" role="alert">
+                                {{ $errors->first('asset_name') }}
+                            </span>
+                        @endif
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="category_asset_id" class="control-label">Category*</label>
+                        {!! Form::select('category_asset_id', [''=>'- Select -'] + $category, null, ['class'=>'form-control dynamic2', 'id'=>'category_asset_id']) !!}
+
+                        @if($errors->has('category_asset_id'))
+                            <span class="invalid-feedback" role="alert">
+                                {{ $errors->first('category_asset_id') }}
+                            </span>
+                        @endif
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="class_id" class="control-label">Class*</label>
+                        {!! Form::select('class_id', [''=>'- Select -'] + $class, null, ['class'=>'form-control', 'id'=>'class_id']) !!}
+
+                        @if($errors->has('class_id'))
+                            <span class="invalid-feedback" role="alert">
+                                {{ $errors->first('class_id') }}
+                            </span>
+                        @endif
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+            	<div class="col-md-12">
+            		<div class="form-group">
+                        <label for="desc" class="control-label">Description*</label>
+                        {!! Form::textarea('desc', null, ['class'=>'form-control textarea', 'id'=>'desc', 'rows'=>6]) !!}
+
+                        @if($errors->has('desc'))
+                            <span class="invalid-feedback" role="alert">
+                                {{ $errors->first('desc') }}
+                            </span>
+                        @endif
+                    </div>
+            	</div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="price_market" class="control-label">Market Price*</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                Rp
+                            </span>
+                            {!! Form::text('price_market', null, ['class'=>'form-control', 'id'=>'price_market']) !!}
+                        </div>
+
+                        @if($errors->has('price_market'))
+                            <span class="invalid-feedback" role="alert">
+                                {{ $errors->first('price_market') }}
+                            </span>
+                        @endif
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="price_liquidation" class="control-label">Liquidation Price*</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                Rp
+                            </span>
+                            {!! Form::text('price_liquidation', null, ['class'=>'form-control', 'id'=>'price_liquidation']) !!}
+                        </div>
+
+                        @if($errors->has('price_liquidation'))
+                            <span class="invalid-feedback" role="alert">
+                                {{ $errors->first('price_liquidation') }}
+                            </span>
+                        @endif
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="price_selling" class="control-label">Selling Price*</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                Rp
+                            </span>
+                            {!! Form::text('price_selling', null, ['class'=>'form-control', 'id'=>'price_selling']) !!}
+                        </div>
+
+                        @if($errors->has('price_selling'))
+                            <span class="invalid-feedback" role="alert">
+                                {{ $errors->first('price_selling') }}
+                            </span>
+                        @endif
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="credit_tenor" class="control-label">Credit Tenor*</label>
+                        {!! Form::select('credit_tenor', [''=>'- Select -'] + $tenorCredit, null, ['class'=>'form-control', 'id'=>'credit_tenor']) !!}
+
+                        @if($errors->has('credit_tenor'))
+                            <span class="invalid-feedback" role="alert">
+                                {{ $errors->first('credit_tenor') }}
+                            </span>
+                        @endif
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="gender" class="control-label">Interest*</label>
+                        {!! Form::select('interest', [''=>'- Select -']+['18'=>'18 %','19'=>'19 %','22'=>'22 %'], null, ['class'=>'form-control', 'id'=>'interest']) !!}
+
+                        @if($errors->has('interest'))
+                            <span class="invalid-feedback" role="alert">
+                                {{ $errors->first('interest') }}
+                            </span>
+                        @endif
+                    </div>
+                </div>
+            	<div class="col-md-4">
+            		<div class="form-group">
+                        <label for="file_resume" class="control-label">Resume File</label>
+                        @if($model->file_resume != '')
+                        	<br>
+                        	<a href="/files/asset/{{ $model->file_resume }}" target="_blank" class="btn btn-xs btn-primary"><i class="fa fa-download"></i> Download Resume File</a>
+                        @endif
+                        {!! Form::file('file_resume', ['accept'=>'.pdf']) !!}
+
+                         <span class="invalid-feedback" role="alert">
+                            <i>*File ekstensi: .pdf</i><br>
+                        </span>
+                        @if($errors->has('file_resume'))
+                            <span class="invalid-feedback" role="alert">
+                                {{ $errors->first('file_resume') }}
+                            </span>
+                        @endif
+                    </div>
+            	</div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="file_fiducia" class="control-label">Fiducia File</label>
+                        @if($model->file_fiducia != '')
+                            <br>
+                            <a href="/files/asset/{{ $model->file_fiducia }}" target="_blank" class="btn btn-xs btn-primary"><i class="fa fa-download"></i> Download Fiducia File</a>
+                        @endif
+                        {!! Form::file('file_fiducia', ['accept'=>'.pdf']) !!}
+
+                         <span class="invalid-feedback" role="alert">
+                            <i>*File ekstensi: .pdf</i><br>
+                        </span>
+                        @if($errors->has('file_fiducia'))
+                            <span class="invalid-feedback" role="alert">
+                                {{ $errors->first('file_fiducia') }}
+                            </span>
+                        @endif
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="terms_conds_id" class="control-label">Term & Conditions*</label>
+                        {!! Form::select('terms_conds_id', [''=>'- Select -'] + $termsconds, null, ['class'=>'form-control', 'id'=>'terms_conds_id']) !!}
+
+                        @if($errors->has('terms_conds_id'))
+                            <span class="invalid-feedback" role="alert">
+                                {{ $errors->first('terms_conds_id') }}
+                            </span>
+                        @endif
+                    </div>
+                </div>
+            </div>
+            {{-- attachment --}}
+            <div class="row">
+            	<div class="col-md-6">
+    		        <label for="images" class="control-label">Photo</label>
+    		        {{-- show image gallery --}}
+    		        <div class="img-gallery-wrapper">
+    		        	@php $img = 0; @endphp
+    		        	@foreach($images as $image)
+    			        	<div class="img-wrap {{ $image->featured == 1 ? 'bg-aqua' : '' }}">
+    			        		<img src="/images/asset/{{ $image->photo }}" class="">
+
+    			        		<button class="btn btn-xs btn-primary set-featured {{ $image->featured == 1 ? 'hide' : '' }}" data-key="{{ $image->id }}" data-asset="{{  $image->asset_id }}">Set As Featured</button>
+
+    			        		<button class="btn btn-xs btn-danger img-close {{ $image->featured == 1 ? 'hide' : '' }}" data-key="{{ $image->id }}"><i class="fa fa-close"></i></button>
+    			        	</div>
+                        	@php $img++; @endphp
+    		        	@endforeach
+    		        	<div style="clear: both;"></div>
+    		        </div>
+
+    		        <div class="field_wrapper">
+    			        <div class="form-group img-form-group row">
+                            <div class="col-md-7">
+                                <input type="file" name="images[]" class="form-control" accept="image/x-png, image/jpeg">
+                            </div>
+                            <div class="col-md-3">
+                                <label><input type="radio" name="featured" value="0">&nbsp;Featured</label>
+                            </div>
+                            <div class="col-md-2">
+                                <a href="javascript:void(0);" class="add_button btn btn-sm btn-success" title="Add Field"><i class="fa fa-plus"></i></a>
+                            </div>
+    			        </div>
+    		        </div>
+    		        @if($errors->has('images'))
+                        <span class="invalid-feedback" role="alert">
+                            {{ $errors->first('images') }}
+                        </span>
+                    @endif
+            	</div>
+                <div class="col-md-6">
+                    <label for="attr_name" class="control-label">Asset Details*</label>
+
+                    <div class="attributes_wrapper">
+                    	@php $count = 0; @endphp
+    		        	@foreach($attributes as $attribute)
+                        	<div class="form-group attr-form-group row">
+                        		<div class="col-md-5">
+    	                            <select name="attr_name[]" id="attr_name" class="form-control attr_name">
+    	                                <option value="">- Select -</option>
+    	                            	@foreach($attributeList as $key => $value)
+    	                            		@if($key == $attribute->attr_asset_id)
+    	                                		<option value="{!! $key !!}" selected>{!! $value !!}</option>
+    	                                	@else
+    	                                		<option value="{!! $key !!}">{!! $value !!}</option>
+    	                                	@endif
+    	                            	@endforeach
+    	                            </select>
+    	                        </div>
+    	                        <div class="col-md-5">
+    	                            <input type="text" name="attr_value[]" class="form-control" value="{!! $attribute->value !!}">
+    	                        </div>
+                            	<div class="col-md-2">
+    		        			@if($count <= 0)
+                                	<a href="javascript:void(0);" class="add_attr_button btn btn-sm btn-success" title="Add Field"><i class="fa fa-plus"></i></a>
+                                @else
+                                	<a href="javascript:void(0);" class="existed_attr_remove_button btn btn-sm btn-danger" title="Remove" data-asset="{{ $attribute->asset_id }}" data-attr="{{ $attribute->attr_asset_id }}"><i class="fa fa-close"></i></a>
+    		        			@endif
+    		        			</div>
+                        	</div>
+                        	@php $count++; @endphp
+                    	@endforeach
+                    </div>
+
+                    @if($errors->has('attr_name.*'))
+                        <span class="invalid-feedback" role="alert">
+                            {{ $errors->first('attr_name.*') }}
+                        </span>
+                    @endif
+                    @if($errors->has('attr_value.*'))
+                        <span class="invalid-feedback" role="alert">
+                            {{ $errors->first('attr_value.*') }}
+                        </span>
+                    @endif
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="banner_new" class="control-label">New Banner</label>
+                    <img src="/images/asset/{{ $newbanner->photo }}" class="img-responsive">
+                    {!! Form::file('banner_new', ['accept'=>'image/x-png, image/jpeg', 'class'=>'form-control']) !!}
+
+                    @if($errors->has('banner_new'))
+                        <span class="invalid-feedback" role="alert">
+                            {{ $errors->first('banner_new') }}
+                        </span>
+                    @endif
+                </div>
+                <div class="col-md-4">
+                    <label for="banner_hot" class="control-label">Hot Banner</label>
+                    <img src="/images/asset/{{ $hotbanner->photo }}" class="img-responsive">
+                    {!! Form::file('banner_hot', ['accept'=>'image/x-png, image/jpeg', 'class'=>'form-control']) !!}
+
+                    @if($errors->has('banner_hot'))
+                        <span class="invalid-feedback" role="alert">
+                            {{ $errors->first('banner_hot') }}
+                        </span>
+                    @endif
+                </div>
+            </div>
+
+            <hr>
+            <h3>Address</h3>
+            <div class="row">
+                {{-- country --}}
+                <div class="col-md-4"> 
+                    <div class="form-group">
+                        <label for="country" class="control-label">Country*</label>
+                        <select name="country" id="country" class="form-control dynamic" data-table="mst_provinces" data-key="countries_id">
+                            <option value="">- Select -</option>
+                            @foreach($countries as $country)
+                                <option value="{{ $country->id }}" {{ $address['country_id']==$country->id?'selected':'' }}>{{ $country->name }}</option>
+                            @endforeach
+                        </select>
+
+                        @if($errors->has('country'))
+                            <span class="invalid-feedback" role="alert">
+                                {{ $errors->first('country') }}
+                            </span>
+                        @endif
+                    </div>
+                </div>
+                {{-- province --}}
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="province" class="control-label">Province*</label>
+                        <select name="province" id="mst_provinces" class="form-control dynamic" data-table="mst_regencies" data-key="provinces_id">
+                            <option value="">- Select -</option>
+                            @foreach($provinces as $province)
+                                <option value="{{ $province->id }}" {{ $address['province_id']==$province->id?'selected':'' }}>{{ $province->name }}</option>
+                            @endforeach
+                        </select>
+
+                        @if($errors->has('province'))
+                            <span class="invalid-feedback" role="alert">
+                                {{ $errors->first('province') }}
+                            </span>
+                        @endif
+                    </div>
+                </div>
+                {{-- regency --}}
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="regencies_id" class="control-label">Regency*</label>
+                        <select name="regencies_id" id="mst_regencies" class="form-control select2">
+                            <option value="">- Select -</option>
+                            @foreach($regencies as $regency)
+                                <option value="{{ $regency->id }}" {{ $address['regency_id']==$regency->id?'selected':'' }}>{{ $regency->name }}</option>
+                            @endforeach
+                        </select>
+
+                        @if($errors->has('regencies_id'))
+                            <span class="invalid-feedback" role="alert">
+                                {{ $errors->first('regencies_id') }}
+                            </span>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+            <h4>Owner</h4>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="owner_name" class="control-label">Full Name*</label>
+                        {!! Form::text('owner_name', null, ['class'=>'form-control', 'id'=>'owner_name']) !!}
+
+                        @if($errors->has('owner_name'))
+                            <span class="invalid-feedback" role="alert">
+                                {{ $errors->first('owner_name') }}
+                            </span>
+                        @endif
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="owner_ktp_number" class="control-label">Identity Card Number*</label>
+                        {!! Form::text('owner_ktp_number', null, ['class'=>'form-control', 'id'=>'owner_ktp_number']) !!}
+
+                        @if($errors->has('owner_ktp_number'))
+                            <span class="invalid-feedback" role="alert">
+                                {{ $errors->first('owner_ktp_number') }}
+                            </span>
+                        @endif
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="owner_kk_number" class="control-label">Family Card Number*</label>
+                        {!! Form::text('owner_kk_number', null, ['class'=>'form-control', 'id'=>'owner_kk_number']) !!}
+
+                        @if($errors->has('owner_kk_number'))
+                            <span class="invalid-feedback" role="alert">
+                                {{ $errors->first('owner_kk_number') }}
+                            </span>
+                        @endif
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="owner_npwp_number" class="control-label">NPWP Number*</label>
+                        {!! Form::text('owner_npwp_number', null, ['class'=>'form-control', 'id'=>'owner_npwp_number']) !!}
+
+                        @if($errors->has('owner_npwp_number'))
+                            <span class="invalid-feedback" role="alert">
+                                {{ $errors->first('owner_npwp_number') }}
+                            </span>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+            <h3>Status</h3>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="date_available" class="control-label">Available Date</label>
+                        <div class="input-group date">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input name="date_available" type="text" class="form-control pull-right" id="datepicker" value="{{ date('d-m-Y', strtotime($model->date_available)) }}">
+                        </div>
+
+                        @if($errors->has('date_available'))
+                            <span class="invalid-feedback" role="alert">
+                                {{ $errors->first('date_available') }}
+                            </span>
+                        @endif
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="date_expired" class="control-label">Expired Date</label>
+                        <div class="input-group date">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input name="date_expired" type="text" class="form-control pull-right" id="datepicker2" value="{{ date('d-m-Y', strtotime($model->date_expired)) }}">
+                        </div>
+
+                        @if($errors->has('date_expired'))
+                            <span class="invalid-feedback" role="alert">
+                                {{ $errors->first('date_expired') }}
+                            </span>
+                        @endif
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="active" class="control-label">Active</label>
+                        <div>
+                            {!! Form::checkbox('active', null, null, ['id'=>'active']) !!} 
+                        </div>
+
+                        @if($errors->has('active'))
+                            <span class="invalid-feedback" role="alert">
+                                {{ $errors->first('active') }}
+                            </span>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        {!! Form::submit('Save', ['class'=>'btn btn-primary pull-right']) !!}
+    </div>
+    {!! Form::close() !!}
+</div>
+@endsection
+
+@push('scripts')
+<script>
+	$('.img-close').click(function(e){
+		e.preventDefault();
+		var key = $(this).data('key'),
+			token = $('input[name="_token"]').val();
+	    var ithis = $(this);
+		
+		swal({
+	        title : 'Are you sure ?',
+	        type : 'warning',
+	        showCancelButton : true,
+	        confirmButtonColor : '#3085d6',
+	        cancelButtonColor : '#d33',
+	        confirmButtonText : 'Yes, delete!'
+	    }).then((result)=>{
+	        if(result.value){
+
+				$.ajax({
+					url : "{{ route('asset.remove-image') }}",
+					method : 'post',
+					data : {
+						value : key,
+						_token : token
+					},
+					success : function(r){
+						status = true;
+
+						ithis.closest('.img-wrap').remove();
+
+						swal({
+	                        type : 'success',
+	                        title : 'Success',
+	                        text : 'Deleted'
+	                    });
+					},
+					error : function(er){
+	                    swal({
+	                        type : 'error',
+	                        title : 'Failed',
+	                        text : 'Failed'
+	                    });
+	                }
+				});
+	        }
+	    });
+
+	});
+
+	$('.existed_attr_remove_button').click(function(e){
+		e.preventDefault();
+
+		var asset = $(this).data('asset'),
+			attr = $(this).data('attr'),
+			token = $('input[name="_token"]').val();
+		var ithis = $(this);
+
+		swal({
+	        title : 'Are you sure ?',
+	        type : 'warning',
+	        showCancelButton : true,
+	        confirmButtonColor : '#3085d6',
+	        cancelButtonColor : '#d33',
+	        confirmButtonText : 'Yes, delete!'
+	    }).then((result)=>{
+	        if(result.value){
+
+				$.ajax({
+					url : "{{ route('asset.remove-attr') }}",
+					method : 'post',
+					data : {
+						asset : asset,
+						attr : attr,
+						_token : token
+					},
+					success : function(r){
+						status = true;
+
+						ithis.closest('.attr-form-group').remove();
+
+						swal({
+	                        type : 'success',
+	                        title : 'Success',
+	                        text : 'Deleted'
+	                    });
+					},
+					error : function(er){
+	                    swal({
+	                        type : 'error',
+	                        title : 'Failed',
+	                        text : 'Failed'
+	                    });
+	                }
+				});
+	        }
+	    });
+	});
+
+    $('.dynamic2').change(function(){
+        if($(this).val() != ''){
+            var value = $(this).val(),
+                token = $('input[name="_token"]').val();
+
+            $.ajax({
+                url : "{{ route('asset.fetch-attributes') }}",
+                method : 'post',
+                data : {
+                    value : value,
+                    _token : token
+                },
+                success : function(result){
+                    $('.attr_name').html(result);
+                }
+            });
+        }
+    });
+
+    $('.dynamic').change(function(){
+        if($(this).val() != ''){
+            var id = $(this).attr('id'),
+                value = $(this).val(),
+                table = $(this).data('table'),
+                key = $(this).data('key'),
+                token = $('input[name="_token"]').val();
+
+            $.ajax({
+                url : "{{ route('employee.fetch') }}",
+                method : 'post',
+                data : {
+                    id : id,
+                    value : value,
+                    _token : token,
+                    table : table,
+                    key : key
+                },
+                success : function(result){
+                    $('#'+table).html(result);
+                }
+            });
+        }
+    });
+
+    $('.set-featured').click(function(e){
+    	e.preventDefault();
+    	// mencari bg-aqua
+    	// var f = document.getElementsByClassName("bg-aqua");
+    	var f = document.querySelectorAll(".img-wrap.bg-aqua");
+        var fbtn = document.querySelectorAll(".set-featured");
+    	var closebtn = document.querySelectorAll(".img-close");
+
+    	var id = $(this).data('key'),
+    		asset = $(this).data('asset'),
+			token = $('input[name="_token"]').val();
+	    var ithis = $(this);
+
+	    // console.log(f);
+	    swal({
+	        title : 'Set this image as featured?',
+	        type : 'warning',
+	        showCancelButton : true,
+	        confirmButtonColor : '#3085d6',
+	        cancelButtonColor : '#d33',
+	        confirmButtonText : 'Yes!'
+	    }).then((result)=>{
+	        if(result.value){
+
+				$.ajax({
+					url : "{{ route('asset.set-featured') }}",
+					method : 'post',
+					data : {
+						id : id,
+						asset : asset,
+						_token : token
+					},
+					success : function(r){
+						// change bg old featured
+						[].forEach.call(f, function(el) {
+						    el.classList.remove("bg-aqua");
+						});
+                        // show featured btn
+                        [].forEach.call(fbtn, function(el) {
+                            el.classList.remove("hide");
+                        });
+						// show remove btn
+                        [].forEach.call(closebtn, function(el) {
+                            el.classList.remove("hide");
+                        });
+						// hide featured button
+						ithis.addClass("hide");
+						ithis.closest('.img-wrap').addClass('bg-aqua');
+                        // hide remove btn
+                        ithis.closest('.img-wrap').find(".img-close").addClass('hide');
+
+						swal({
+	                        type : 'success',
+	                        title : 'Success',
+	                        text : 'Deleted'
+	                    });
+					},
+					error : function(er){
+	                    swal({
+	                        type : 'error',
+	                        title : 'Failed',
+	                        text : 'Failed'
+	                    });
+	                }
+				});
+	        }
+	    });
+    });
+
+
+	var maxField = 10,
+        addButton = $('.add_button'),
+		addAttrButton = $('.add_attr_button'),
+        wrapper = $('.field_wrapper'),
+		attr_wrapper = $('.attributes_wrapper'),
+        fieldImgHtml = '<div class="form-group img-form-group row"><div class="col-md-10"><input type="file" name="images[]" class="form-control" accept="image/x-png, image/jpeg"></div><div class="col-md-2"><a href="javascript:void(0);" class="remove_button btn btn-sm btn-danger" title="Remove"><i class="fa fa-close"></i></a></div></div>',
+        x = 0,
+        y = 1;
+
+	$(addButton).click(function(){
+		if(x < maxField){
+			x++;
+			$(wrapper).append('<div class="form-group img-form-group row"><div class="col-md-7"><input type="file" name="images[]" class="form-control" accept="image/x-png, image/jpeg"></div><div class="col-md-3"><label><input type="radio" name="featured" value="'+x+'" >&nbsp;Featured</label></div><div class="col-md-2"><a href="javascript:void(0);" class="remove_button btn btn-sm btn-danger" title="Remove"><i class="fa fa-close"></i></a></div></div>');
+		}
+	});
+
+	$(wrapper).on('click', '.remove_button', function(e){
+        e.preventDefault();
+        $(this).closest('.img-form-group').remove();
+        // $(this).parent('div').remove(); //Remove field html
+        // document.getElementsByClassName("form-group").remove();
+        x--; //Decrement field counter
+    });
+
+    $(addAttrButton).click(function(){
+        if(y < maxField){
+            y++;
+            $(attr_wrapper).append('<div class="form-group attr-form-group row"><div class="col-md-5"><select name="attr_name[]" class="form-control attr_name attr_'+y+'" id="attr_name"></select></div><div class="col-md-5"><input type="text" name="attr_value[]" class="form-control"></div><div class="col-md-2"><a href="javascript:void(0);" class="remove_attr_button btn btn-sm btn-danger" title="Remove"><i class="fa fa-close"></i></a></div></div>');
+
+            var value = $('#category_asset_id').val();
+            var token = $('input[name="_token"]').val();
+
+            $.ajax({
+                url : "{{ route('asset.fetch-attributes') }}",
+                method : 'post',
+                data : {
+                    value : value,
+                    _token : token
+                },
+                success : function(result){
+                    $('.attr_'+y).html(result);
+                }
+            });
+        }
+    });
+
+    $(attr_wrapper).on('click', '.remove_attr_button', function(e){
+        e.preventDefault();
+        $(this).closest('.attr-form-group').remove();
+        // $(this).parent('div').remove(); //Remove field html
+        // document.getElementsByClassName("form-group").remove();
+        x--; //Decrement field counter
+    });
+
+</script>
+@endpush
+
+@push('css')
+<style>
+.img-gallery-wrapper {
+	/*border: 1px solid #d2d6de;*/
+	/*background: #f1f1f1;*/
+	margin-bottom: 10px;
+}	
+.img-wrap {
+	width: 48.5%;
+    position: relative;
+    margin: 0px 5px 5px 0px;
+    float: left;
+    background-color: #fafafa;
+    border-radius: 4px;
+    border: 1px solid #e6e4e4;
+}
+.featured {
+    background-color: #f39c12;
+}
+.img-wrap img {
+	width: 93px;
+    height: 60px;
+    margin-right: 10px;
+}
+.hide {
+	display: none;
+}
+/*.img-wrap .img-close {
+    position: absolute;
+    top: 46%;
+    left: 92%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    background-color: #dd4b39;
+    color: white;
+    font-size: 12px;
+    padding: 4px 8px;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    text-align: center;
+    opacity: 0.8;
+}
+.img-wrap:hover .img-close {
+    opacity: 1;
+    background-color: #dd4b39;
+}*/
+</style>
+@endpush

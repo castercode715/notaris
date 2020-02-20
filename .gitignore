@@ -1,0 +1,17 @@
+/public/images
+/public/files
+/config/database.php
+/vendor
+/storage
+.env
+.env.example
+.vscode
+sftp-config.json
+
+/node_modules
+/public/storage
+/storage/*.key
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log

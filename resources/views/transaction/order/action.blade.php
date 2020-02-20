@@ -1,0 +1,1 @@
+<a href="{{ $url_show }}" class="btn btn-xs btn-primary" title="Order Number #{{ $model->no_order }}"><i class="fa fa-search"></i></a>

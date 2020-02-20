@@ -1,0 +1,1 @@
+<a href="{{ $url_destroy }}" class="btn-delete3 btn btn-xs btn-danger" title="Delete"><i class="fa fa-trash"></i></a>

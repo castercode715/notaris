@@ -1,0 +1,1 @@
+<a href="{{ $url_edit }}" class="btn btn-xs btn-primary" title="Edit {{ $model->description }}"><i class="fa fa-edit"></i></a>

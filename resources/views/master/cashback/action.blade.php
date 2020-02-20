@@ -1,0 +1,2 @@
+<a href="{{ $ushow }}" class="btn btn-xs btn-primary" title="Detail {{ $model->title }}"><i class="fa fa-search"></i></a>
+<a href="{{ $uedit }}" class="btn btn-xs btn-primary" title="Edit {{ $model->title }}"><i class="fa fa-edit"></i></a>

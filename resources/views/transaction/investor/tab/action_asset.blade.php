@@ -1,0 +1,1 @@
+<a href="{{ $url_show }}" class="btn btn-xs btn-primary btn-show2" title="Detail"><i class="fa fa-search"></i></a>

@@ -1,0 +1,2 @@
+<a href="{{ $url_edit }}" class="btn btn-xs btn-primary" title="Edit {{ $model->description }}"><i class="fa fa-edit"></i></a>
+{{-- <a href="{{ $url_destroy }}" class="btn-delete btn btn-xs btn-danger" title="delete {{ $model->description }}"><i class="fa fa-trash"></i></a> --}}
